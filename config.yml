@@ -1,7 +1,7 @@
 server: "Example" # нужно если этот плагин используется на нескольких серверах с одинаковым токеном
 type: "button" # button, code, button_code, code_button
 token: "" # токен Discord бота
-channel_id: "" # канал для присылания кода (пароля)
+channel_id: "" # канал для присылания кода
 rgb: "&#" # rgb префикс
 log: true # логирование защит в файл
 
