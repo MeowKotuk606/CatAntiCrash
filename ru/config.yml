@@ -1,0 +1,168 @@
+server: "Сервер" # нужно если этот плагин используется на нескольких серверах с одинаковым токеном
+type: "button" # button, code, button_code, code_button
+token: "" # токен Discord бота
+channel_id: "" # канал для присылания кода
+rgb: "&#" # rgb префикс
+log: true # логирование защит в файл
+
+admins: # список игроков которым разрешается использовать админку (для них работает проверка)
+  - MeowKotuk606
+
+force_check: # список игроков которых всегда будет проверять
+  - MeowKotuk606
+
+ignore: [] # список игроков которых будет игнорировать
+
+data: # данные
+  MeowKotuk606: # ник игрока
+    discord: "1037483912999473172" # его id дискорда
+
+defend:
+  worlds: # защита миров
+    spawn: # название мира
+      break: true # тип изменения, если true то блокирует
+      place: true
+      explosion: true
+      piston: true
+      bucket: true
+      fire: true
+      mobs: true
+  op:
+    enable: true
+    whitelist:
+      enabled: true # если включено то использует свой вайтлист, если выключено то использует список админов
+      players: # вайтлист
+        - MeowKotuk606
+  permissions:
+    enable: true
+    whitelist:
+      enabled: false
+      players:
+        - MeowKotuk606
+  groups:
+    enable: true
+    whitelist:
+      enabled: false
+      players:
+        - MeowKotuk606
+
+ban: # бан
+  enable: true
+  num: 3 # количество раз защиты сервера от этого игрока через которые его забанит
+  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВы заблокированы из за слишком большого количества попыток крашнуть сервер. Если вы считаете что это ошибка, напишите об этом в Discord сервера: https://discord.gg/JVcWz3eTFG"
+
+kick: # кик при наличии запрещенных прав
+  enable: true
+  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа вашем аккаунте были замечены админ-права, этот кик сделан для безопасности сервера"
+
+permissions:
+  start: # префиксы прав которые запрещены (можно использовать любое, даже test.test.test)
+    - "*"
+    - "bukkit."
+    - "luckperms."
+    - "citizens."
+    - "citizenscmd."
+    - "minecraft."
+    - "vulcan."
+    - "protocol."
+    - "dh."
+    - "fawe."
+    - "worldguard."
+    - "multiverse."
+    - "placeholderapi."
+    - "example."
+    - "catanticrash."
+  full: # запрещенные права написанные ПОЛНОСТЬЮ
+    - "bukkit.command.plugins"
+  whitelist: # разрешенные права (перекрывают запрещенные)
+    start:
+      - "example.test."
+    full:
+      - "example.test.permission"
+
+commands:
+  verify_arg: "(код)" # аргумент /verify
+  blacklist: # запрещенные команды (обходится через catanticrash.bypass_commands, если игрок админ то команда verify удет всё равно доступна для проверки)
+    full:
+      - "verify"
+      - "plugins"
+      - "pl"
+      - "cacrel"
+    start:
+      - "catanticrash:"
+      - "catchat:"
+  whitelist: # разрешенные команды, перекрывает запрещенные
+    full:
+      - "catchat:chat"
+    start:
+      - "catanticrash:"
+  msg: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеизвестная команда"
+
+remove: # команды удаления прав и групп
+  groups: "lp user %player% parent remove %group%"
+  permissions: "lp user %player% permission unset %permission%"
+
+buttons: # текст на кнопках
+  allow: "Подтвердить"
+  deny: "Отклонить"
+
+code: # настройка кода
+  length: 10 # длина
+  chars: "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890!@#$%^&*()<>{}[]?/|=+-_~" # символы из которых создаст код
+
+embed: # ембед в сообщении с кнопками
+  title: "CatAntiCrash"
+  fields:
+    msg: "Подтвердите вход для"
+    server: "Сервер"
+  geo: # ip + местоположение в сообщении с кнопками
+    use: true
+    ip: "IP"
+    location: "Местоположение"
+    error: "Ошибка получения местоположения"
+  responses:
+    used_word: "-"
+    used: "Вы уже использовали это сообщение"
+    not_found: "Игрок не найден"
+    deny: "Вы запретили вход"
+    allow: "Вы разрешили вход"
+    logged: "Вы уже вошли в аккаунт"
+  code: # ембед в сообщении с кодом
+    title: "CatAntiCrash"
+    fields:
+      msg: "Код для админа `%name%`"
+      server:
+        use: true
+        text: "Сервер"
+
+default: # сообщения
+  id: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВаш Discord ID не найден, сообщите об этом пользователю МяуКотик606 (meowkotuk606)"
+  check:
+    block: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВам запретили вход из Discord"
+    start:
+      button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cПроверь свой Discord"
+      code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВведи /verify (код из Discord канала anticrash)"
+  remove:
+    permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещено право %premission%"
+    op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена OP"
+    groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена админка (группа %group%)"
+  reload:
+    succesful: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &2Конфиг плагина перезагружен"
+    no_permission: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНедостаточно прав"
+  verify:
+    use: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cИспользование: /verify (код)"
+    kick_incorrect: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеверный пароль"
+
+titles: # текст по середине экрана
+  login:
+    title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
+    sub: "&2Вы вошли в аккаунт"
+  verify:
+    button:
+      title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
+      sub: "&cВойди в аккаунт"
+    code:
+      title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
+      sub: "&cВойди в аккаунт"
+
+# CAC (CatAntiCrash) 2.0 - CatMines update
