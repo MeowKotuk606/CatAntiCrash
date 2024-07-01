@@ -10,6 +10,6 @@ commands:
   cacrel:
     description: Перезагрузка
 permissions:
-  catanticrash.bypass_commands:
+  catanticrash.bypass.commands:
     description: Обход запретов на команды
     default: false
