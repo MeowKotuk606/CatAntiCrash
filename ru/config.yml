@@ -28,31 +28,46 @@ defend:
       fire: true
       mobs: true
   op:
-    enable: true
+    enabled: true
     whitelist:
       enabled: true # если включено то использует свой вайтлист, если выключено то использует список админов
       players: # вайтлист
         - MeowKotuk606
   permissions:
-    enable: true
+    enabled: true
     whitelist:
       enabled: false
       players:
         - MeowKotuk606
   groups:
-    enable: true
+    enabled: true
+    whitelist:
+      enabled: false
+      players:
+        - MeowKotuk606
+  gamemode:
+    enabled: true
+    blacklist: # доступно: CREATIVE, ADVENTURE, SURVIVAL, SPECTATOR
+      - CREATIVE
+      - SPECTATOR
+    replace: SURVIVAL # на какой режим игры заменит запрещенный режим
     whitelist:
       enabled: false
       players:
         - MeowKotuk606
 
 ban: # бан
-  enable: true
+  enabled: true
   num: 3 # количество раз защиты сервера от этого игрока через которые его забанит
   reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВы заблокированы из за слишком большого количества попыток крашнуть сервер. Если вы считаете что это ошибка, напишите об этом в Discord сервера: https://discord.gg/JVcWz3eTFG"
 
 kick: # кик при наличии запрещенных прав
-  enable: true
+  enabled: true
+  types:
+    gamemode: false
+    op: true
+    permissions: true
+    groups: true
   reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа вашем аккаунте были замечены админ-права, этот кик сделан для безопасности сервера"
 
 permissions:
@@ -82,7 +97,7 @@ permissions:
 
 commands:
   verify_arg: "(код)" # аргумент /verify
-  blacklist: # запрещенные команды (обходится через catanticrash.bypass_commands, если игрок админ то команда verify удет всё равно доступна для проверки)
+  blacklist: # запрещенные команды (обходится через catanticrash.bypass.commands, если игрок админ то команда verify удет всё равно доступна для проверки)
     full:
       - "verify"
       - "plugins"
@@ -143,6 +158,7 @@ default: # сообщения
       button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cПроверь свой Discord"
       code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВведи /verify (код из Discord канала anticrash)"
   remove:
+    gamemode: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещен режим игры %gamemode%"
     permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещено право %premission%"
     op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена OP"
     groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена админка (группа %group%)"
@@ -164,5 +180,3 @@ titles: # текст по середине экрана
     code:
       title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
       sub: "&cВойди в аккаунт"
-
-# CAC (CatAntiCrash) 2.0 - CatMines update
