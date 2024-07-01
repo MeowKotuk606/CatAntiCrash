@@ -1,0 +1,184 @@
+server: "Server" # needed if this plugin is used on multiple servers with the same token
+type: "button" # button, code, button_code, code_button
+token: "" # Discord bot token
+channel_id: "" # channel for sending the code
+rgb: "&#" # rgb prefix
+log: true # logging protections to file
+
+admins: # list of players allowed to use admin rights (verification works for them)
+- MeowKotuk606
+
+force_check: # list of players who will always be checked
+- MeowKotuk606
+
+ignore: [] # list of players who will be ignored
+
+data: # data
+MeowKotuk606: # player nickname
+discord: "1037483912999473172" # their Discord id
+
+defend:
+  worlds: # world protection
+    spawn: # world name
+    break: true # change type, if true then blocks
+    place: true
+    explosion: true
+    piston: true
+    bucket: true
+    fire: true
+    mobs: true
+  op: # protection against op crash
+    enabled: true
+    whitelist:
+      enabled: true # if enabled, uses its own whitelist, if disabled, uses the admin list
+      players: # whitelist
+        - MeowKotuk606
+  permissions: # protection against permission crash
+    enabled: true
+    whitelist:
+      enabled: false
+      players:
+        - MeowKotuk606
+  groups: # protection against group permission crash
+    enabled: true
+    whitelist:
+      enabled: false
+      players:
+        - MeowKotuk606
+
+ban: # ban
+  enable: true
+  num: 3 # number of times the server is protected from this player before they get banned
+  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYou are banned due to too many attempts to crash the server"
+
+kick: # kick if having forbidden permissions
+  enable: true
+  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cAdmin permissions were detected on your account, this kick is for server security"
+
+permissions:
+  start: # prefixes of forbidden permissions (you can use any, even test.test.test)
+    - "*"
+    - "bukkit."
+    - "luckperms."
+    - "citizens."
+    - "citizenscmd."
+    - "minecraft."
+    - "vulcan."
+    - "protocol."
+    - "dh."
+    - "fawe."
+    - "worldguard."
+    - "multiverse."
+    - "placeholderapi."
+    - "example."
+    - "catanticrash."
+  full: # fully written forbidden permissions
+    - "bukkit.command.plugins"
+  whitelist: # allowed permissions (override forbidden ones)
+    start:
+      - "example.test."
+    full:
+      - "example.test.permission"
+
+commands:
+  verify_arg: "(code)" # argument for /verify
+  blacklist: # forbidden commands (bypassed with catanticrash.bypass_commands, if the player is admin then the verify command will still be available for verification)
+    full:
+      - "verify"
+      - "plugins"
+      - "pl"
+      - "cacrel"
+    start:
+      - "catanticrash:"
+      - "catchat:"
+  whitelist: # allowed commands, overrides forbidden ones
+    full:
+      - "catchat:chat"
+    start:
+      - "catanticrash:"
+  msg: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cUnknown command"
+
+remove: # commands to remove permissions and groups
+  groups: "lp user %player% parent remove %group%"
+  permissions: "lp user %player% permission unset %permission%"
+
+buttons: # text on buttons
+  allow: "Confirm"
+  deny: "Deny"
+
+code: # code settings
+  length: 10 # length
+  chars: "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890!@#$%^&*()<>{}[]?/|=+-_~" # characters to create the code from
+
+embed: # embed in the message with buttons
+  title: "CatAntiCrash"
+  fields:
+    msg: "Confirm login for"
+    server: "Server"
+  geo: # ip + location in the message with buttons
+    use: true
+    ip: "IP"
+    location: "Location"
+    error: "Error getting location"
+  responses:
+    used_word: "-"
+    used: "You have already used this message"
+    not_found: "Player not found"
+    deny: "You denied the login"
+    allow: "You allowed the login"
+    logged: "You are already logged into the account"
+  code: # embed in the message with the code
+    title: "CatAntiCrash"
+    fields:
+      msg: "Code for admin `%name%`"
+      server:
+        use: true
+        text: "Server"
+
+default: # сообщения
+  id: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВаш Discord ID не найден, сообщите об этом пользователю МяуКотик606 (meowkotuk606)"
+  check:
+    block: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВам запретили вход из Discord"
+    start:
+      button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cПроверь свой Discord"
+      code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВведи /verify (код из Discord канала anticrash)"
+  remove:
+    permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещено право %premission%"
+    op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена OP"
+    groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена админка (группа %group%)"
+  reload:
+    succesful: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &2Конфиг плагина перезагружен"
+    no_permission: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНедостаточно прав"
+  verify:
+    use: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cИспользование: /verify (код)"
+    kick_incorrect: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеверный пароль"
+
+default: # messages
+  id: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYour Discord ID was not found, please report this to user MeowKotuk606 (meowkotuk606)"
+  check:
+    block: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYour login was denied from Discord"
+    start:
+      button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cCheck your Discord"
+      code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cEnter /verify (code from Discord channel anticrash)"
+  remove:
+    permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cThe permission %premission% is forbidden on the server"
+    op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cOP is forbidden on the server"
+    groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cAdmin rights are forbidden on the server (group %group%)"
+  reload:
+    succesful: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &2Plugin config reloaded"
+    no_permission: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cInsufficient permissions"
+  verify:
+    use: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cUsage: /verify (code)"
+    kick_incorrect: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cIncorrect password"
+
+titles: # text in the middle of the screen
+  login:
+    title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
+    sub: "&2You have logged into the account"
+  verify:
+    button:
+      title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
+      sub: "&cLog into the account"
+    code:
+      title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
+      sub: "&cLog into the account"
