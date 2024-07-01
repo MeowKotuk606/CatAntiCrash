@@ -520,7 +520,7 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 					try {
 						return GameMode.valueOf(mode.toUpperCase());
 					} catch (IllegalArgumentException e) {
-						getLogger().warning("Неверный режим игры в конфиге: " + mode);
+						log("Неверный режим игры в конфиге: " + mode, CatLevel.warn);
 						return null;
 					}
 				}).filter(mode -> mode != null).collect(Collectors.toList());
