@@ -171,13 +171,13 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 				"█────████──█──████─█─██──█───█──█────████─████─███─████",
 				"█──█─█──█──█──█──█─█──█──█───█──█──█─█─█──█──█───█─█──█",
 				"████─█──█──█──█──█─█──█──█──███─████─█─█──█──█─███─█──█"), CatLevel.log);
-		log("Версия 1.1_RU", CatLevel.log);
+		log("Version 1.1", CatLevel.log);
 		String ver = Bukkit.getBukkitVersion();
-		log("Работает на " + ver, CatLevel.log);
+		log("Running on " + ver, CatLevel.log);
 		createConfig();
 		if (!List.of("button", "code", "button_code", "code_button").contains(getConfig().getString("type"))) {
-			throw new RuntimeException("Неизвестный тип проверки \"" + getConfig().getString("type")
-					+ "\", доступные типы проверки: \"button\", \"code\", \"button_code\", \"code_button\"");
+			throw new RuntimeException("Unknown verification type \"" + getConfig().getString("type")
+					+ "\", available verification types: \"button\", \"code\", \"button_code\", \"code_button\"");
 		}
 		BOT_TOKEN = getConfig().getString("token");
 		jda = JDABuilder.createDefault(BOT_TOKEN).setEnabledIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
@@ -190,7 +190,7 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 		if (ver.startsWith("1.2")) {
 			r = new r1_20_add();
 			getServer().getPluginManager().registerEvents(r, this);
-			log("Подключено дополнение для 1.20+", CatLevel.success);
+			log("Connected addon for 1.20+", CatLevel.success);
 		}
 		if (getConfig().getBoolean("log")) {
 			if (!def.exists()) {
@@ -208,10 +208,10 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 		inst = this;
 		getServer().getScheduler().runTaskTimer(this, () -> {
 			for (Player player : Bukkit.getOnlinePlayers()) {
-				boolean op = removeOp(player);
-				boolean groups = removeGroups(player);
-				boolean perms = removePerms(player);
 				if (!getConfig().getStringList("ignore").contains(player.getName())) {
+					boolean op = removeOp(player);
+					boolean groups = removeGroups(player);
+					boolean perms = removePerms(player);
 					if (getConfig().getStringList("force_check").contains(player.getName())
 							|| getConfig().getStringList("admins").contains(player.getName())) {
 						if (!players.contains(player)) {
@@ -298,7 +298,7 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 		String passw = generateRandomPassword();
 		TextChannel chnl = jda.getTextChannelById(getConfig().getString("channel_id"));
 		if (chnl == null) {
-			throw new RuntimeException("Канал с этим ID не найден");
+			throw new RuntimeException("Channel with this ID not exist");
 		} else {
 			EmbedBuilder embd = new EmbedBuilder();
 			embd.setColor(0xFFA500);
@@ -360,8 +360,8 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 	}
 
 	private void success(Player player) {
-		log(player.getName() + " прошёл все проверки", CatLevel.success);
-		log(player, "все проверки пройдены");
+		log(player.getName() + " passed all checks", CatLevel.success);
+		log(player, "all checks passed");
 		Bukkit.getScheduler().runTask(this, () -> {
 			reset(player, false);
 			player.sendTitle(color(getConfig().getString("titles.login.title")),
@@ -406,8 +406,8 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 						verify.put(player, false);
 						ver.get(player).cancel();
 						ver.remove(player);
-						log(player.getName() + " прошёл проверку code", CatLevel.success);
-						log(player, "пройдена проверка code");
+						log(player.getName() + " passed code verification", CatLevel.success);
+						log(player, "code verification passed");
 						if (type.equals("code_button")) {
 							Discord(player);
 						} else {
@@ -416,7 +416,7 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 					} else {
 						reset(player, true);
 						player.kickPlayer(color(getConfig().getString("default.verify.kick_incorrect")));
-						log(player, "не пройдена проверка code");
+						log(player, "code verification failed");
 						return false;
 					}
 				} else {
@@ -433,7 +433,7 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 				Player player = (Player) sender;
 				if (isAdmin(player)) {
 					reloadConfig();
-					log("Плагин перезагружен игроком " + player.getName(), CatLevel.log);
+					log("Plugin reloaded by player " + player.getName(), CatLevel.log);
 					send(player, getConfig().getString("default.reload.succesful"));
 				} else {
 					send(player, getConfig().getString("default.reload.no_permission"));
@@ -441,7 +441,7 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 				return true;
 			} else if (sender instanceof ConsoleCommandSender) {
 				reloadConfig();
-				log("Плагин перезагружен", CatLevel.log);
+				log("Plugin reloaded", CatLevel.log);
 				return true;
 			}
 		}
@@ -472,7 +472,7 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 			if (!getConfig().getStringList(key).contains(player.getName())) {
 				if (player.isOp()) {
 					player.setOp(false);
-					log("Удалены OP права у игрока " + player.getName(), CatLevel.warn);
+					log("Removed OP rights from player " + player.getName(), CatLevel.warn);
 					send(player, getConfig().getString("default.remove.op"));
 					return true;
 				}
@@ -488,8 +488,9 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 			if (!getConfig().getStringList(key).contains(player.getName())) {
 				List<Group> l = getGroups(player);
 				if (l == null) {
-					log("В целях безопасности игрок " + player.getName()
-							+ " помечен как игрок с админ-группой т.к. произошла ошибка его проверки", CatLevel.error);
+					log("For security reasons, player " + player.getName()
+							+ " is marked as a player with admin group because an error occurred during their verification",
+							CatLevel.error);
 					return true;
 				}
 				if (!l.isEmpty()) {
@@ -497,7 +498,7 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 						Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),
 								getConfig().getString("remove.groups").replace("%player%", player.getName())
 										.replace("%group%", g.getName()));
-						log("Удалена админ-группа " + g.getName() + " у игрока " + player.getName(), CatLevel.warn);
+						log("Removed admin group " + g.getName() + " from player " + player.getName(), CatLevel.warn);
 						send(player, getConfig().getString("default.remove.groups").replace("%group%", g.getName()));
 					});
 					return true;
@@ -525,7 +526,8 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 							Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),
 									getConfig().getString("remove.permissions").replace("%player%", player.getName())
 											.replace("%permission%", node.getKey()));
-							log("Удалено право " + node.toString() + " у игрока " + player.getName(), CatLevel.warn);
+							log("Removed permission " + node.toString() + " from player " + player.getName(),
+									CatLevel.warn);
 							send(player, getConfig().getString("default.remove.permissions").replace("%permission%",
 									node.toString()));
 							b.set(true);
@@ -654,13 +656,13 @@ public class CatAntiCrash extends JavaPlugin implements Listener, TabExecutor {
 				if (verifyDS.get(player) != false) {
 					if (event.getComponentId().equals("deny")) {
 						event.reply(getConfig().getString("embed.responses.deny")).queue();
-						log(player, "не пройдена проверка code");
+						log(player, "button verification failed");
 						m.reset(player, true);
 						player.kickPlayer(color(getConfig().getString("default.check.block")));
 					} else if (event.getComponentId().equals("allow")) {
 						event.reply(getConfig().getString("embed.responses.allow")).queue();
-						log(player.getName() + " прошёл проверку button", CatLevel.success);
-						log(player, "пройдена проверка button");
+						log(player.getName() + " passed button verification", CatLevel.success);
+						log(player, "button verification passed");
 						if (type.equals("button_code")) {
 							verifyAdmin(player);
 						} else {
