@@ -45,6 +45,16 @@ defend:
       enabled: false
       players:
         - MeowKotuk606
+  gamemode:
+    enabled: true
+    blacklist: # avaible: CREATIVE, ADVENTURE, SURVIVAL, SPECTATOR
+      - CREATIVE
+      - SPECTATOR
+    replace: SURVIVAL # which game mode will replace the forbidden mode
+    whitelist:
+      enabled: false
+      players:
+        - MeowKotuk606
 
 ban: # ban
   enable: true
@@ -53,6 +63,11 @@ ban: # ban
 
 kick: # kick if having forbidden permissions
   enable: true
+  types:
+    gamemode: false
+    op: true
+    permissions: true
+    groups: true
   reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cAdmin permissions were detected on your account, this kick is for server security"
 
 permissions:
@@ -135,24 +150,6 @@ embed: # embed in the message with buttons
         use: true
         text: "Server"
 
-default: # сообщения
-  id: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВаш Discord ID не найден, сообщите об этом пользователю МяуКотик606 (meowkotuk606)"
-  check:
-    block: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВам запретили вход из Discord"
-    start:
-      button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cПроверь свой Discord"
-      code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВведи /verify (код из Discord канала anticrash)"
-  remove:
-    permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещено право %premission%"
-    op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена OP"
-    groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена админка (группа %group%)"
-  reload:
-    succesful: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &2Конфиг плагина перезагружен"
-    no_permission: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНедостаточно прав"
-  verify:
-    use: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cИспользование: /verify (код)"
-    kick_incorrect: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеверный пароль"
-
 default: # messages
   id: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYour Discord ID was not found, please report this to user MeowKotuk606 (meowkotuk606)"
   check:
@@ -161,6 +158,7 @@ default: # messages
       button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cCheck your Discord"
       code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cEnter /verify (code from Discord channel anticrash)"
   remove:
+    gamemode: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cThe game mode %gamemode% is forbidden on the server"
     permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cThe permission %premission% is forbidden on the server"
     op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cOP is forbidden on the server"
     groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cAdmin rights are forbidden on the server (group %group%)"
