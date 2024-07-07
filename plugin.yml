@@ -1,0 +1,15 @@
+main: cat.meowkotuk606.anticrash.CatAntiCrash
+name: CatAntiCrash
+api-version: 1.16
+version: 2.0
+depend: [CatLib,LuckPerms,CatJDA]
+author: MeowKotuk606
+commands:
+  verify:
+    description: Admin rights verification
+  cacrel:
+    description: Reload plugin
+permissions:
+  catanticrash.bypass.commands:
+    description: Bypass command restrictions
+    default: false
