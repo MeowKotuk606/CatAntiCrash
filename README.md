@@ -15,7 +15,7 @@
 <li>🌍 При проверке кнопками можно сделать так чтобы писало местоположение того кто пытается войти (это пишет в ЛС админу)</li>
 <li>🛑 Защита от краша с помощью выдачи /op, запрещенных прав и LuckPerms групп с запрещенными правами (настраивается)</li>
 </ol>
-Требуется <a href=https://github.com/MeowKotuk606/CatLib/>CatLib</a> и <a href=https://luckperms.net/download/>LuckPerms</a>
+Требуется <a href=https://github.com/MeowKotuk606/CatLib/releases>CatLib</a> и <a href=https://luckperms.net/download/>LuckPerms</a>
 </details>
 <details>
 <summary>English</summary>
@@ -32,7 +32,7 @@
 <li>⚡ Kick on crash attempt (configurable, can be disabled)</li>
 <li>🌍 When verifying with buttons, you can make it show the location of the person trying to log in (this is sent in DM to the admin)</li>
 <li>🛑 Protection against crashes by granting /op, forbidden permissions and LuckPerms groups with forbidden permissions (configurable)</li></ol>
-Requires <a href=https://github.com/MeowKotuk606/CatLib/>CatLib</a> and <a href=https://luckperms.net/download/>LuckPerms</a>
+Requires <a href=https://github.com/MeowKotuk606/CatLib/releases>CatLib</a> and <a href=https://luckperms.net/download/>LuckPerms</a>
 </details>
 
 ![CatAntiCrash](https://github.com/MeowKotuk606/CatAntiCrash/blob/main/CatAntiCrash.png)<br>
