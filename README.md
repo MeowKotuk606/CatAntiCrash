@@ -36,3 +36,5 @@ Requires <a href=https://github.com/MeowKotuk606/CatLib/releases>CatLib</a> and 
 </details>
 
 ![CatAntiCrash](https://github.com/MeowKotuk606/CatAntiCrash/blob/main/CatAntiCrash.png)<br>
+
+<br><img src="https://bstats.org/signatures/bukkit/CatAntiCrash.svg"></img>
