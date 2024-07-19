@@ -1,8 +1,9 @@
 main: cat.meowkotuk606.anticrash.CatAntiCrash
 name: CatAntiCrash
-api-version: 1.16
-version: 2.0
-depend: [CatLib,LuckPerms,CatJDA]
+version: 2.1
+depend: [CatLib,LuckPerms,CatJDA,ProtocolLib]
+softdepend: [UltimateServerProtector]
+loadafter: [UltimateServerProtector,LuckPerms,CatLib,CatJDA,ProtocolLib]
 author: MeowKotuk606
 commands:
   verify:
