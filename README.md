@@ -15,7 +15,7 @@
 <li>🌍 При проверке кнопками можно сделать чтобы писало местоположение того кто пытается войти</li>
 <li>🛑 Защита от краша с помощью выдачи /op, запрещенных прав (их можно удалять даже из групп), вредоносных пакетов, эксплоитов, режимов игры (например gm 1, настраивается) и LuckPerms групп</li>
 </ol>
-Требуется <a href=https://github.com/MeowKotuk606/CatLib/releases>CatLib</a>, <a href=https://www.spigotmc.org/resources/protocollib.1997/>ProtocolLib</a> и <a href=https://luckperms.net/download/>LuckPerms</a>
+Требуется <a href=https://www.spigotmc.org/resources/protocollib.1997/>ProtocolLib</a> и <a href=https://luckperms.net/download/>LuckPerms</a>
 </details>
 <details>
 <summary>English</summary>
@@ -33,7 +33,7 @@
 <li>🌍 During button verification, it's possible to display the location of the person trying to join</li>
 <li>🛑 Protection against crashes through /op granting, forbidden permissions (can be removed even from groups), malicious packets, exploits, game modes (e.g., gm 1, configurable), and LuckPerms groups</li>
 </ol>
-Requires <a href=https://github.com/MeowKotuk606/CatLib/releases>CatLib</a>, <a href=https://www.spigotmc.org/resources/protocollib.1997/>ProtocolLib</a> and <a href=https://luckperms.net/download/>LuckPerms</a>
+Requires <a href=https://www.spigotmc.org/resources/protocollib.1997/>ProtocolLib</a> and <a href=https://luckperms.net/download/>LuckPerms</a>
 </details>
 
 ![CatAntiCrash](https://github.com/MeowKotuk606/CatAntiCrash/blob/main/CatAntiCrash.png)<br>
