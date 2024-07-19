@@ -1,8 +1,12 @@
 server: "Server" # needed if this plugin is used on multiple servers with the same token
-type: "button" # button, code, button_code, code_button
+types:
+  - "button"
+  - "code"
+  - "password"
 token: "" # Discord bot token
-channel_id: "" # channel for sending the code
-rgb: "&#" # rgb prefix
+channel_id: "" # channel for sending codes
+rgb: "&#"
+time_zone: "Europe/Moscow" # https://docs.oracle.com/middleware/1221/wcs/tag-ref/MISC/TimeZones.html
 log:
   enabled: true # logging to file
   types:
@@ -13,26 +17,55 @@ log:
     defend: true
     kick: true
 
-admins: # list of players allowed to use admin rights (verification works for them)
-  - MeowKotuk606
+admins: # list of players allowed to use admin features (verification works for them)
+  MeowKotuk606:
+    discord_id: "1037483912999473172"
+    password: "Meow606"
 
 force_check: # list of players who will always be checked
   - MeowKotuk606
 
 ignore: [] # list of players who will be ignored
 
-data: # data
-  MeowKotuk606: # player nickname
-    discord: "1037483912999473172" # their Discord id
+ban: # ban
+  enabled: true
+  types:
+    op: true
+    permissions: true
+    groups: true
+    gamemode: false
+    packets: true
+    exploits: true
+  num: 3 # number of times the server defends against this player before banning them
+  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYou have been banned due to too many attempts to crash the server. If you believe this is an error, please report it on the server's Discord: https://discord.gg/JVcWz3eTFG"
+  ignore:
+    - MeowKotuk606
+
+kick: # kick when having forbidden permissions
+  enabled: true
+  types:
+    op: true
+    permissions: true
+    groups: true
+    gamemode: false
+  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cAdmin permissions were detected on your account, this kick is for server security"
+  packets:
+    enabled: true
+    reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cInvalid data type"
+  exploits:
+    enabled: true
+    reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cExploit usage detected"
+  ignore:
+    - MeowKotuk606
 
 defend:
   worlds: # world protection
     spawn: # world name
       break:
-       enabled: true # if true then blocks
+       enabled: true # if true, it blocks
        types:
-         - "*" # block types, * - all types, !type - adds the type to the "whitelist"
-         - "!bedrROCK" # can be written in any case, here it's deliberately in 2 cases simultaneously as an example
+         - "*" # block types, * - all types, !type - adds type to "whitelist"
+         - "!bedrROCK" # can be written in any case, here two cases are used simultaneously for example
       place:
        enabled: true
        types:
@@ -48,51 +81,63 @@ defend:
         empty: true
       fire: true
       mobs: true
-  op: # protection against op crash
+  op:
     enabled: true
     whitelist:
-      enabled: true # if enabled, uses its own whitelist, if disabled, uses the admin list
+      admins: true # if enabled, uses the admin list along with this whitelist
       players: # whitelist
         - MeowKotuk606
-  permissions: # protection against permission crash
+  permissions:
     enabled: true
     whitelist:
-      enabled: false
+      admins: true
       players:
         - MeowKotuk606
-  groups: # protection against group permission crash
+  groups:
     enabled: true
     whitelist:
-      enabled: false
+      admins: true
       players:
         - MeowKotuk606
+    settings:
+      use_permissions_settings: true # if enabled, considers groups with forbidden permissions as forbidden
+      blacklist:
+        - admin
+        - owner
+        - example
+      whitelist:
+        - moder
+      permanent_permissions:
+        enabled: true
+        settings:
+          admin:
+            blacklist_perms: false # use of forbidden permissions in blacklist
+            blacklist:
+              - example.use
+            whitelist:
+              - example.use.commands
   gamemode:
     enabled: true
-    blacklist: # avaible: CREATIVE, ADVENTURE, SURVIVAL, SPECTATOR
+    blacklist: # available: CREATIVE, ADVENTURE, SURVIVAL, SPECTATOR
       - CREATIVE
       - SPECTATOR
-    replace: SURVIVAL # which game mode will replace the forbidden mode
+    replace: SURVIVAL # which gamemode to replace the forbidden mode with
     whitelist:
-      enabled: false
-      players:
-        - MeowKotuk606
-
-ban: # ban
-  enable: true
-  num: 3 # number of times the server is protected from this player before they get banned
-  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYou are banned due to too many attempts to crash the server"
-
-kick: # kick if having forbidden permissions
-  enable: true
-  types:
-    gamemode: false
-    op: true
-    permissions: true
-    groups: true
-  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cAdmin permissions were detected on your account, this kick is for server security"
+      admins: true
+      players: []
+  packets:
+    enabled: true
+    whitelist:
+      admins: true
+      players: []
+  exploits:
+    enabled: true
+    whitelist:
+      admins: true
+      players: []
 
 permissions:
-  start: # prefixes of forbidden permissions (you can use any, even test.test.test)
+  start: # prefixes of forbidden permissions (can use any, even test.test.test)
     - "*"
     - "bukkit."
     - "luckperms."
@@ -117,8 +162,9 @@ permissions:
       - "example.test.permission"
 
 commands:
-  verify_arg: "(code)" # argument for /verify
-  blacklist: # forbidden commands (bypassed with catanticrash.bypass_commands, if the player is admin then the verify command will still be available for verification)
+  verify_arg: "(code | password)" # argument for /verify
+  blacklist: # forbidden commands (bypassed with catanticrash.bypass.commands, if player is admin then verify command will still be available for checking)
+    block_all: true # block ALL commands (if not in whitelist)
     full:
       - "verify"
       - "plugins"
@@ -132,11 +178,13 @@ commands:
       - "catchat:chat"
     start:
       - "catanticrash:"
+    check:
+      full:
+        - "login"
+        - "l"
+      start:
+        - "authme:"
   msg: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cUnknown command"
-
-remove: # commands to remove permissions and groups
-  groups: "lp user %player% parent remove %group%"
-  permissions: "lp user %player% permission unset %permission%"
 
 buttons: # text on buttons
   allow: "Confirm"
@@ -146,24 +194,26 @@ code: # code settings
   length: 10 # length
   chars: "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890!@#$%^&*()<>{}[]?/|=+-_~" # characters to create the code from
 
-embed: # embed in the message with buttons
+embed: # embed in message with buttons
   title: "CatAntiCrash"
   fields:
     msg: "Confirm login for"
     server: "Server"
-  geo: # ip + location in the message with buttons
+  geo: # ip + location in message with buttons
     use: true
     ip: "IP"
     location: "Location"
     error: "Error getting location"
   responses:
-    used_word: "-"
-    used: "You have already used this message"
+    used:
+      text: "-"
+      msg: "You have already used this message"
+      delete: true
     not_found: "Player not found"
     deny: "You denied the login"
     allow: "You allowed the login"
-    logged: "You are already logged into the account"
-  code: # embed in the message with the code
+    logged: "You are already logged in"
+  code: # embed in message with code
     title: "CatAntiCrash"
     fields:
       msg: "Code for admin `%name%`"
@@ -171,33 +221,102 @@ embed: # embed in the message with buttons
         use: true
         text: "Server"
 
-default: # messages
-  id: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYour Discord ID was not found, please report this to user MeowKotuk606 (meowkotuk606)"
-  check:
-    block: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYour login was denied from Discord"
-    start:
-      button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cCheck your Discord"
-      code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cEnter /verify (code from Discord channel anticrash)"
-  remove:
-    gamemode: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cThe game mode %gamemode% is forbidden on the server"
-    permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cThe permission %premission% is forbidden on the server"
-    op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cOP is forbidden on the server"
-    groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cAdmin rights are forbidden on the server (group %group%)"
-  reload:
-    succesful: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &2Plugin config reloaded"
-    no_permission: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cInsufficient permissions"
-  verify:
-    use: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cUsage: /verify (code)"
-    kick_incorrect: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cIncorrect password"
-
 titles: # text in the middle of the screen
   login:
+    enabled: true
     title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
-    sub: "&2You have logged into the account"
+    sub: "&2You have logged in"
   verify:
     button:
+      enabled: true
       title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
-      sub: "&cLog into the account"
+      sub: "&cLog in to your account"
     code:
+      enabled: true
       title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
-      sub: "&cLog into the account"
+      sub: "&cLog in to your account"
+    password:
+      enabled: true
+      title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
+      sub: "&cLog in to your account"
+
+effects:
+  login:
+    enabled: true
+    list: # list of effects in format effect:level:time, for versions 1.20 INFINITE works (infinite), in lower versions 60 is used instead of infinity
+      - regeneration:100:INFINITE
+    remove: # list of effects to remove
+      - blindness
+      - darkness
+  verify:
+    button:
+      enabled: true
+      list: # list of effects in format effect:level:time
+        - BLINDness:1:INFINITE
+        - darkneSS:2:10
+    code:
+      enabled: true
+      list:
+        - BLINDness:1:INFINITE
+        - darkneSS:2:10
+    password:
+      enabled: true
+      list:
+        - BLINDness:1:INFINITE
+        - darkneSS:2:10
+
+bossbar:
+  code:
+    enabled: true
+    title: "&cYou have &6%time% &cseconds left"
+    color: RED # Color (PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE)
+    type: SOLID # Type (SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20)
+  button:
+    enabled: true
+    title: "&cYou have &6%time% &cseconds left"
+    color: YELLOW
+    type: SEGMENTED_12
+  password:
+    enabled: true
+    title: "&cYou have &6%time% &cseconds left"
+    color: BLUE
+    type: SEGMENTED_20
+
+timeout: # time within which the verification must be completed
+  button:
+    enabled: true
+    time: 60 # in seconds
+    kick_reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYou failed to complete the verification within %time% seconds"
+  code:
+    enabled: true
+    time: 60
+    kick_reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYou failed to complete the verification within %time% seconds"
+  password:
+    enabled: true
+    time: 60
+    kick_reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYou failed to complete the verification within %time% seconds"
+
+check:
+  block: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYour login was denied from Discord"
+  start:
+    button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cCheck your Discord, you have %time% seconds"
+    code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cEnter /verify (code from Discord anticrash channel), you have %time% seconds"
+    password: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cEnter /verify (your password), you have %time% seconds"
+
+remove:
+  permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cThe permission %premission% is forbidden on the server"
+  op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cOP rights are forbidden on the server"
+  groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cThe group %group% is forbidden on the server"
+  gamemode: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cThe gamemode %gamemode% is forbidden on the server"
+
+reload:
+  succesful: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &2Plugin config reloaded"
+  no_permission: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cInsufficient permissions"
+
+verify:
+  use: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cUsage: /verify (code | password)"
+  incorrect:
+    code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cIncorrect code"
+    password: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cIncorrect password"
+
+id_error: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cYour Discord ID was not found, please report this to Discord user МяуКотик606 (meowkotuk606)"
