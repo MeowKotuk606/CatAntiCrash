@@ -1,14 +1,15 @@
-1. Скачать [JDA](https://github.com/discord-jda/JDA/releases/tag/v5.0.0) (файл ...withDependencies.jar)
+# CatJDA
+1. Скачать последнюю версию [JDA](https://github.com/discord-jda/JDA/releases/) (файл ...withDependencies.jar)
 2. Распаковать в любую пустую папку (с помощью WinRAR) и удалить META-INF и скачанный jar файл
 3. Создать в Eclipse или другой Java IDE пустой проект, создать yaml файл plugin.yml в основной папке (т.е. без пакета (package)) с этим содержанием:
 ```yaml
 main: cat.CatJDA
 name: CatJDA
 depend: [CatLib]
-version: 0
+version: 1.0
 author: MeowKotuk606
 ```
-Потом создать пакет cat и в нём java файл CatJDA с этим содержанием:
+Потом создать пакет cat и в нём java файл CatJDA с этим содержанием:<br>
 ```java
 package cat;
 
