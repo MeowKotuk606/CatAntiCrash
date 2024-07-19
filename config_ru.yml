@@ -1,8 +1,12 @@
 server: "Сервер" # нужно если этот плагин используется на нескольких серверах с одинаковым токеном
-type: "button" # button, code, button_code, code_button
+types:
+  - "button"
+  - "code"
+  - "password"
 token: "" # токен Discord бота
 channel_id: "" # канал для присылания кода
-rgb: "&#" # rgb префикс
+rgb: "&#"
+time_zone: "Europe/Moscow" # https://docs.oracle.com/middleware/1221/wcs/tag-ref/MISC/TimeZones.html
 log:
   enabled: true # логирование в файл
   types:
@@ -13,17 +17,46 @@ log:
     defend: true
     kick: true
 
-admins: # список игроков которым разрешается использовать админку (для них работает проверка)
-  - MeowKotuk606
+admins: # список игроков которым разрешается админка (для них работает проверка)
+  MeowKotuk606:
+    discord_id: "1037483912999473172"
+    password: "Meow606"
 
 force_check: # список игроков которых всегда будет проверять
   - MeowKotuk606
 
 ignore: [] # список игроков которых будет игнорировать
 
-data: # данные
-  MeowKotuk606: # ник игрока
-    discord: "1037483912999473172" # его id дискорда
+ban: # бан
+  enabled: true
+  types:
+    op: true
+    permissions: true
+    groups: true
+    gamemode: false
+    packets: true
+    exploits: true
+  num: 3 # количество раз защиты сервера от этого игрока через которые его забанит
+  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВы заблокированы из за слишком большого количества попыток крашнуть сервер. Если вы считаете что это ошибка, напишите об этом в Discord сервера: https://discord.gg/JVcWz3eTFG"
+  ignore:
+    - MeowKotuk606
+
+kick: # кик при наличии запрещенных прав
+  enabled: true
+  types:
+    op: true
+    permissions: true
+    groups: true
+    gamemode: false
+  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа вашем аккаунте были замечены админ-права, этот кик сделан для безопасности сервера"
+  packets:
+    enabled: true
+    reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеверный тип данных"
+  exploits:
+    enabled: true
+    reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cОбнаружено использование эксплоита"
+  ignore:
+    - MeowKotuk606
 
 defend:
   worlds: # защита миров
@@ -51,21 +84,38 @@ defend:
   op:
     enabled: true
     whitelist:
-      enabled: true # если включено то использует свой вайтлист, если выключено то использует список админов
+      admins: true # если включено то использует список админов вместе с этим вайтлистом
       players: # вайтлист
         - MeowKotuk606
   permissions:
     enabled: true
     whitelist:
-      enabled: false
+      admins: true
       players:
         - MeowKotuk606
   groups:
     enabled: true
     whitelist:
-      enabled: false
+      admins: true
       players:
         - MeowKotuk606
+    settings:
+      use_permissions_settings: true # если включено то считает группы с запрещенными правами запрещенными
+      blacklist:
+        - admin
+        - owner
+        - example
+      whitelist:
+        - moder
+      permanent_permissions:
+        enabled: true
+        settings:
+          admin:
+            blacklist_perms: false # использование запрещенных прав в blacklist
+            blacklist:
+              - example.use
+            whitelist:
+              - example.use.commands
   gamemode:
     enabled: true
     blacklist: # доступно: CREATIVE, ADVENTURE, SURVIVAL, SPECTATOR
@@ -73,23 +123,18 @@ defend:
       - SPECTATOR
     replace: SURVIVAL # на какой режим игры заменит запрещенный режим
     whitelist:
-      enabled: false
-      players:
-        - MeowKotuk606
-
-ban: # бан
-  enabled: true
-  num: 3 # количество раз защиты сервера от этого игрока через которые его забанит
-  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВы заблокированы из за слишком большого количества попыток крашнуть сервер. Если вы считаете что это ошибка, напишите об этом в Discord сервера: https://discord.gg/JVcWz3eTFG"
-
-kick: # кик при наличии запрещенных прав
-  enabled: true
-  types:
-    gamemode: false
-    op: true
-    permissions: true
-    groups: true
-  reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа вашем аккаунте были замечены админ-права, этот кик сделан для безопасности сервера"
+      admins: true
+      players: []
+  packets:
+    enabled: true
+    whitelist:
+      admins: true
+      players: []
+  exploits:
+    enabled: true
+    whitelist:
+      admins: true
+      players: []
 
 permissions:
   start: # префиксы прав которые запрещены (можно использовать любое, даже test.test.test)
@@ -117,8 +162,9 @@ permissions:
       - "example.test.permission"
 
 commands:
-  verify_arg: "(код)" # аргумент /verify
+  verify_arg: "(код | пароль)" # аргумент /verify
   blacklist: # запрещенные команды (обходится через catanticrash.bypass.commands, если игрок админ то команда verify удет всё равно доступна для проверки)
+    block_all: true # блокировка ВСЕХ команд (если нет в белом списке)
     full:
       - "verify"
       - "plugins"
@@ -132,11 +178,13 @@ commands:
       - "catchat:chat"
     start:
       - "catanticrash:"
+    check:
+      full:
+        - "login"
+        - "l"
+      start:
+        - "authme:"
   msg: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеизвестная команда"
-
-remove: # команды удаления прав и групп
-  groups: "lp user %player% parent remove %group%"
-  permissions: "lp user %player% permission unset %permission%"
 
 buttons: # текст на кнопках
   allow: "Подтвердить"
@@ -157,8 +205,10 @@ embed: # ембед в сообщении с кнопками
     location: "Местоположение"
     error: "Ошибка получения местоположения"
   responses:
-    used_word: "-"
-    used: "Вы уже использовали это сообщение"
+    used:
+      text: "-"
+      msg: "Вы уже использовали это сообщение"
+      delete: true
     not_found: "Игрок не найден"
     deny: "Вы запретили вход"
     allow: "Вы разрешили вход"
@@ -171,33 +221,102 @@ embed: # ембед в сообщении с кнопками
         use: true
         text: "Сервер"
 
-default: # сообщения
-  id: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВаш Discord ID не найден, сообщите об этом пользователю МяуКотик606 (meowkotuk606)"
-  check:
-    block: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВам запретили вход из Discord"
-    start:
-      button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cПроверь свой Discord"
-      code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВведи /verify (код из Discord канала anticrash)"
-  remove:
-    gamemode: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещен режим игры %gamemode%"
-    permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещено право %premission%"
-    op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена OP"
-    groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена админка (группа %group%)"
-  reload:
-    succesful: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &2Конфиг плагина перезагружен"
-    no_permission: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНедостаточно прав"
-  verify:
-    use: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cИспользование: /verify (код)"
-    kick_incorrect: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеверный пароль"
-
 titles: # текст по середине экрана
   login:
+    enabled: true
     title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
     sub: "&2Вы вошли в аккаунт"
   verify:
     button:
+      enabled: true
       title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
       sub: "&cВойди в аккаунт"
     code:
+      enabled: true
       title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
       sub: "&cВойди в аккаунт"
+    password:
+      enabled: true
+      title: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh"
+      sub: "&cВойди в аккаунт"
+
+effects:
+  login:
+    enabled: true
+    list: # список эффектов в формате эффект:уровень:время, для версий 1.20 работает INFINITE (бесконечно), в версиях ниже вместо бесконечности используется 60
+      - regeneration:100:INFINITE
+    remove: # список эффектов для удаления
+      - blindness
+      - darkness
+  verify:
+    button:
+      enabled: true
+      list: # список эффектов в формате эффект:уровень:время
+        - BLINDness:1:INFINITE
+        - darkneSS:2:10
+    code:
+      enabled: true
+      list:
+        - BLINDness:1:INFINITE
+        - darkneSS:2:10
+    password:
+      enabled: true
+      list:
+        - BLINDness:1:INFINITE
+        - darkneSS:2:10
+
+bossbar:
+  code:
+    enabled: true
+    title: "&cВам осталось &6%time% &cсекунд"
+    color: RED # Цвет (PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE)
+    type: SOLID # Тип (SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20)
+  button:
+    enabled: true
+    title: "&cВам осталось &6%time% &cсекунд"
+    color: YELLOW
+    type: SEGMENTED_12
+  password:
+    enabled: true
+    title: "&cВам осталось &6%time% &cсекунд"
+    color: BLUE
+    type: SEGMENTED_20
+
+timeout: # время за которое должна быть завершена проверка
+  button:
+    enabled: true
+    time: 60 # в секундах
+    kick_reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВы не успели завершить проверку за %time% секунд"
+  code:
+    enabled: true
+    time: 60
+    kick_reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВы не успели завершить проверку за %time% секунд"
+  password:
+    enabled: true
+    time: 60
+    kick_reason: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВы не успели завершить проверку за %time% секунд"
+
+check:
+  block: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВам запретили вход из Discord"
+  start:
+    button: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cПроверьте свой Discord, у вас %time% секунд"
+    code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВведите /verify (код из Discord канала anticrash), у вас %time% секунд"
+    password: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВведите /verify (ваш пароль), у вас %time% секунд"
+
+remove:
+  permissions: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещено право %premission%"
+  op: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещены OP права"
+  groups: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещена группа %group%"
+  gamemode: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНа сервере запрещен режим игры %gamemode%"
+
+reload:
+  succesful: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &2Конфиг плагина перезагружен"
+  no_permission: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНедостаточно прав"
+
+verify:
+  use: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cИспользование: /verify (код | пароль)"
+  incorrect:
+    code: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеверный код"
+    password: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cНеверный пароль"
+
+id_error: "&#FF8800&lC&#E89303&la&#D19E06&lt&#B9A809&lA&#A2B30C&ln&#8BBE0F&lt&#74C913&li&#5DD416&lC&#46DF19&lr&#2EE91C&la&#17F41F&ls&#00FF22&lh &8» &cВаш Discord ID не найден, сообщите об этом Discord пользователю МяуКотик606 (meowkotuk606)"
